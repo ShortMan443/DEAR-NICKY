@@ -1,2 +1,0 @@
-def watup():
-  print("hello")
