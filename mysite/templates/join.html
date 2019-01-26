@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyPage</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- nav -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="home.html">MyPage</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="home.html">Home</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- ./nav -->
+
+  <!-- main -->
+  <main class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h1>Join Today!</h1>
+        
+        <button class="btn btn-lg btn-primary btn-block" onclick="location.href='/login'" type="button">Sign in</button>
+     
+        <button class="btn btn-lg btn-primary btn-block" onclick="location.href='/signup'" type="button">Sign Up</button>
+       
+       
+        <img src="{{ url_for('static', filename='Internet_Line-20-512.png') }}" alt="web" width="420" height="420">
+        <!-- ./friends -->
+      </div>
+    </div>
+  </main>
+  <!-- ./main -->
+
+  <!-- footer -->
+  <footer class="container text-center">
+    <ul class="nav nav-pills pull-right">
+      <li>MyPage - Made by Aiden Owens</li>
+    </ul>
+  </footer>
+  <!-- ./footer -->
+  <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+

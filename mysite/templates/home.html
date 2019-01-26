@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MyPage</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- nav -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="home.html">MyPage</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- ./nav -->
+
+  <!-- main -->
+  <main class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- profile brief -->
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>Quote of the Day</h4>
+            <p>"Those who say it can not be done, should not interrupt those doing it."</p>
+          </div>
+        </div>
+        <!-- ./profile brief -->
+
+        <!-- friend requests -->
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>Posts</h4>
+            <ul>
+              {% for posts in posts %}
+              <li>
+                <a href="#">{{ posts.title }}</a> 
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <!-- ./friend requests -->
+      </div>
+      <div class="col-md-6">
+        <!-- post form -->
+          <div class="input-group">
+              <h3></h3>
+              <form action="/post.html">
+                <input class="btn btn-success" type="submit" value="New Post" />
+              </form>
+            </span>
+          </div>
+        </form><hr>
+        <!-- ./post form -->
+
+        <!-- feed -->
+        <div>
+          <!-- post -->
+          {% for posts in posts %}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <h2>{{ posts.title }}</h2>
+              <p>{{ posts.content }}</p>
+            </div>
+            <div class="panel-footer">
+              <span>Posted by {{ posts.author }} on {{ posts.date_posted.strftime('%B %d, %Y') }}</span> 
+      <!--        <span class="pull-right"><a class="text-danger" href="{{ url_for('delete_post', posts_id=posts.id) }}">[delete]</a></span>  -->
+            </div>
+          </div>
+        {% endfor %}
+          <!-- ./post -->
+        </div>
+        <!-- ./feed -->
+      </div>
+      <div class="col-md-3">
+      <!-- add friend -->
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>MyPage Newests Users</h4>
+            <ul>
+              {% for user in user %}
+              <li>
+                <a>{{ user.username }}</a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <!-- ./add friend -->
+
+        <!-- friends -->
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>About</h4>
+            <ul>
+              <li>
+                <p>MyPage is a blog type site that people can come to share thoughts feelling ect. And posts don't disappear, Also have fun.</p>              
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- ./friends -->
+      </div>
+    </div>
+  </main>
+  <!-- ./main -->
+
+  <!-- footer -->
+  <footer class="container text-center">
+    <ul class="nav nav-pills pull-right">
+      <a href="/admin">MyPage - Made by Aiden Owens</a>
+      <a href="/bots">-Bot</a>
+    </ul>
+  </footer>
+  <!-- ./footer -->
+  <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+
