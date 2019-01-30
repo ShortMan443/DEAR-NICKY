@@ -169,9 +169,6 @@ def delete_post(posts_id):
 def error404(error):
     return render_template('profile.html')
 
-if __name__ == '__main__':
-    host = os.getenv('IP', '0.0.0.0')
-    port = int(os.getenv('PORT', 4000))
-    app.debug = True 
-    app.run (host=host, port=port)
+if __name__ == '__main__': 
+    app.run(debug=True)
 
