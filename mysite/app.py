@@ -168,7 +168,3 @@ def delete_post(posts_id):
 @app.errorhandler(404)
 def error404(error):
     return render_template('profile.html')
-
-if __name__ == '__main__': 
-    app.run(debug=True)
-
