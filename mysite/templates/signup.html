@@ -19,6 +19,12 @@ Sign Up
     {{ wtf.form_field(form.username) }}
     {{ wtf.form_field(form.email) }}
     {{ wtf.form_field(form.password) }}
+    {{ form.recaptcha }}
+    {% for error in form.recaptcha.errors %}
+    <ul>
+        <li style="color:red;">Solve it plz  -aiden :)</li>
+    {% endfor %}
+    </ul>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
   </form>
 
