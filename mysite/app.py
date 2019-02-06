@@ -7,7 +7,7 @@ import tempfile
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 import os
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from flask_sqlalchemy import SQLAlchemy
@@ -29,6 +29,10 @@ app = Flask(__name__)
   
 app.config['SECRET_KEY'] = 'thisismytosecretkeynotforyoutsee'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(tempfile.gettempdir(), 'data.db')
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LcZdY8UAAAAAKhGECwpKa-Tl37HDZhNRH7odW3C'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcZdY8UAAAAAG6n4DLMPQM_sQQGC3ZCgHPh2icV'
+app.config['TESTING'] = True
+
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 admin = Admin(app)
@@ -69,7 +73,7 @@ class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
-
+    recaptcha = RecaptchaField()
 
 admin.add_view(ModelView(Blogpost, db.session))
 admin.add_view(ModelView(User, db.session))
