@@ -78,11 +78,6 @@ class RegisterForm(FlaskForm):
 admin.add_view(ModelView(Blogpost, db.session))
 admin.add_view(ModelView(User, db.session))
 
-@app.route('/bots')
-def bots():
-    return render_template('bots.html')
-
-
 @app.route('/home')
 @app.route('/home.html') 
 @login_required
@@ -168,6 +163,96 @@ def delete_post(posts_id):
     db.session.commit()
     return redirect(url_for('home'))
 
+@login_required
+@app.route('/bots')
+def index():
+    return render_template('bots.html')
+
+@app.route('/add_task', methods=('GET', 'POST'))
+def new_task():
+
+	Email = request.form.get('Email')
+	FirstName = request.form.get('FirstName')
+	LastName = request.form.get('LastName')
+	PhoneNum = request.form.get('PhoneNumber')
+	Address = request.form.get('Address')
+	shipping_city = request.form.get('shipping_city')
+	State = request.form.get('State')
+	ZipCode = request.form.get('ZipCode')
+	CCnum = request.form.get('CC#')
+	CC_MM = request.form.get('CC_MM')
+	CC_YY = request.form.get('CC_YY')
+	CC_CVV = request.form.get('CC_CVV')    
+	pidcode = request.form.get('PID')
+   
+
+
+	global session
+	endpoint0 = ('http://www.jimmyjazz.com/cart-request/cart/add/%s/1' %pidcode)
+	response0 = session.get(endpoint0)
+
+	
+	endpoint1 = 'https://www.jimmyjazz.com/cart/checkout'
+	response1 = session.get(endpoint1)
+
+	soup = bs(response1.text,"html.parser")
+	inputs = soup.find_all("input",{"name":"form_build_id"})
+	form_build_id = inputs[0]["value"]
+
+	payload0 = {
+		"billing_email":Email,
+		"billing_email_confirm":Email,
+		"billing_phone":PhoneNum,
+		"email_opt_in":"1",
+		"shipping_first_name":FirstName,
+		"shipping_last_name":LastName,
+		"shipping_country_html":"United States",
+		"shipping_address1":Address,
+		"shipping_address2":"",
+		"shipping_city":shipping_city,
+		"shipping_state":State,
+		"shipping_zip":ZipCode,
+		"shipping_method":"0",
+		"signature_required":"1",
+		"billing_same_as_shipping":"1",
+		"billing_first_name":"",
+		"billing_last_name":"",
+		"billing_country":"US",
+		"billing_address1":"",
+		"billing_address2":"",
+		"billing_city":"",
+		"billing_state":"",
+		"billing_zip":"",
+		"payment_type":"credit_card",
+		"cc_type":"Visa",
+		"cc_number":CCnum,
+		"cc_exp_month":CC_MM,
+		"cc_exp_year":CC_YY,
+		"cc_cvv":CC_CVV,
+		"gc_num":"",
+		"form_build_id":form_build_id,
+		"form_id":"cart_checkout_form"
+	}
+
+	endpoint2 = 'https://www.jimmyjazz.com/cart/checkout'
+	response2 = session.post(endpoint2, data=payload0)
+
+	#print("Checking out:")
+
+	soup1 = bs(response2.text,"html.parser")
+	inputs1 = soup.find_all("input",{"name":"form_build_id"})
+	form_build_id1 = inputs1[0]["value"]
+
+	payload1 = {
+		"form_build_id":form_build_id1,
+		"form_id":"cart_confirm_form"
+	}
+		
+	endpoint3 = 'https://www.jimmyjazz.com/cart/confirm'
+	response3 = session.post(endpoint3, data=payload1)
+	
+	return 'Done Check Email :)'
+  
 
 @app.errorhandler(404)
 def error404(error):
